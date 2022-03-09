@@ -6,10 +6,10 @@ metadata:
   name: my-service # Name of the service
 spec:
   selector:
-    tier: frontend    # Run on any pod(s) with label - app: ui
+    app: animals    # Run on any pod(s) with label - app: ui
   ports:          # Map incoming port to target port
   - name: http-web    # Setting multiple ports listterns 
     protocol: TCP
     port: 80
-    targetPort: 8080
+    targetPort: 80
   type: LoadBalancer
