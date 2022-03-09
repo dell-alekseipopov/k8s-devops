@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend
+  name: animals
   labels:
     app: animals
     tier: frontend
@@ -66,7 +66,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend
+  name: animals
   labels:
     app: animals
     tier: frontend
@@ -126,66 +126,3 @@ spec:
       containers:
         - name: animals
           image: "supergiantkir/animals:moose"
-
----
-
-## THIS will start a redis pod as part of the example and affinity rule above
-apiVersion: v1
-kind: Pod
-metadata:
-  name: redis-cache
-  labels:
-    cache: redis
-spec:
-  # affinity:
-  #   nodeAffinity:
-  #     requiredDuringSchedulingIgnoredDuringExecution:
-  #       nodeSelectorTerms:
-  #       - matchExpressions:
-  #         - key: topology.kubernetes.io/zone
-  #           operator: In
-  #           values:
-  #           - eu-west-1b
-  #           - eu-west-1c
-  #     preferredDuringSchedulingIgnoredDuringExecution:
-  #     - weight: 1
-  #       preference:
-  #         matchExpressions:
-  #         - key: node.kubernetes.io/instance-type
-  #           operator: In
-  #           values:
-  #           - t3.large
-  containers:
-  - name: redis
-    image: redis:latest
----
-
-## THIS will start a redis pod as part of the example and affinity rule above
-apiVersion: v1
-kind: Pod
-metadata:
-  name: redis-cache
-  labels:
-    cache: redis
-spec:
-  # affinity:
-  #   nodeAffinity:
-  #     requiredDuringSchedulingIgnoredDuringExecution:
-  #       nodeSelectorTerms:
-  #       - matchExpressions:
-  #         - key: topology.kubernetes.io/zone
-  #           operator: In
-  #           values:
-  #           - eu-west-1b
-  #           - eu-west-1c
-  #     preferredDuringSchedulingIgnoredDuringExecution:
-  #     - weight: 1
-  #       preference:
-  #         matchExpressions:
-  #         - key: node.kubernetes.io/instance-type
-  #           operator: In
-  #           values:
-  #           - t3.large
-  containers:
-  - name: redis
-    image: redis:latest
