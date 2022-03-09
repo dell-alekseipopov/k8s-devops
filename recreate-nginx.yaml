@@ -57,7 +57,7 @@ spec:
       #       topologyKey: topology.kubernetes.io/zone
       containers:
         - name: spring-music
-          image: "yanivomc/spring-music:latest"
+          image: "nginx:latest"
 
 ---
 
