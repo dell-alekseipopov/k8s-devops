@@ -21,6 +21,7 @@ spec:
     metadata:
       labels:
         tier: frontend
+        app: animals
     spec:
       # affinity:
       #   nodeAffinity:
@@ -86,6 +87,7 @@ spec:
     metadata:
       labels:
         tier: frontend
+        app: animals
     spec:
       # affinity:
       #   nodeAffinity:
