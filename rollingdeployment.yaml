@@ -9,6 +9,11 @@ spec:
   # here we select the number of pods we wish to start and the selector that tells our replica set which pods it needs
   #  to manage
   replicas: 3
+  strategy:
+    type: RollingUpdate
+    RollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
   selector:  # Using the selector we tell our replicaset which pods to manage
     matchLabels:
       tier: frontend
@@ -17,42 +22,42 @@ spec:
       labels:
         tier: frontend
     spec:
-      affinity:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: topology.kubernetes.io/zone
-                operator: In
-                values:
-                - eu-west-1b
-                - eu-west-1c
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 1
-            preference:
-              matchExpressions:
-              - key: node.kubernetes.io/instance-type
-                operator: In
-                values:
-                - t3.large
-        podAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-              matchExpressions:
-              - key: cache
-                operator: In
-                values:
-                - redis
-            topologyKey: topology.kubernetes.io/zone
-        podAntiAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-          - labelSelector:
-                matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                  - spring-music
-            topologyKey: topology.kubernetes.io/zone
+      # affinity:
+      #   nodeAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #       nodeSelectorTerms:
+      #       - matchExpressions:
+      #         - key: topology.kubernetes.io/zone
+      #           operator: In
+      #           values:
+      #           - eu-west-1b
+      #           - eu-west-1c
+      #     preferredDuringSchedulingIgnoredDuringExecution:
+      #     - weight: 1
+      #       preference:
+      #         matchExpressions:
+      #         - key: node.kubernetes.io/instance-type
+      #           operator: In
+      #           values:
+      #           - t3.large
+      #   podAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #     - labelSelector:
+      #         matchExpressions:
+      #         - key: cache
+      #           operator: In
+      #           values:
+      #           - redis
+      #       topologyKey: topology.kubernetes.io/zone
+      #   podAntiAffinity:
+      #     requiredDuringSchedulingIgnoredDuringExecution:
+      #     - labelSelector:
+      #           matchExpressions:
+      #           - key: app
+      #             operator: In
+      #             values:
+      #             - spring-music
+      #       topologyKey: topology.kubernetes.io/zone
       containers:
         - name: spring-music
           image: "yanivomc/spring-music:latest"
@@ -67,24 +72,24 @@ metadata:
   labels:
     cache: redis
 spec:
-  affinity:
-    nodeAffinity:
-      requiredDuringSchedulingIgnoredDuringExecution:
-        nodeSelectorTerms:
-        - matchExpressions:
-          - key: topology.kubernetes.io/zone
-            operator: In
-            values:
-            - eu-west-1b
-            - eu-west-1c
-      preferredDuringSchedulingIgnoredDuringExecution:
-      - weight: 1
-        preference:
-          matchExpressions:
-          - key: node.kubernetes.io/instance-type
-            operator: In
-            values:
-            - t3.large
+  # affinity:
+  #   nodeAffinity:
+  #     requiredDuringSchedulingIgnoredDuringExecution:
+  #       nodeSelectorTerms:
+  #       - matchExpressions:
+  #         - key: topology.kubernetes.io/zone
+  #           operator: In
+  #           values:
+  #           - eu-west-1b
+  #           - eu-west-1c
+  #     preferredDuringSchedulingIgnoredDuringExecution:
+  #     - weight: 1
+  #       preference:
+  #         matchExpressions:
+  #         - key: node.kubernetes.io/instance-type
+  #           operator: In
+  #           values:
+  #           - t3.large
   containers:
   - name: redis
     image: redis:latest
