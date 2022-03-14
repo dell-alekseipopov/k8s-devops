@@ -16,7 +16,7 @@ spec:
   ingressClassName: nginx
   rules:
   - host: "bear-52.30.169.69.nip.io"
-  - http:
+    http:
       paths:
       - path: /bear(/|$)(.*)
         pathType: Prefix
@@ -26,7 +26,7 @@ spec:
              port:
                 number: 80
   - host: "moose-52.30.169.69.nip.io"
-  - http:
+    http:
      paths:
       - path: /moose(/|$)(.*)
         pathType: Prefix
