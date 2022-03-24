@@ -115,13 +115,13 @@ kind: Service
 metadata:
   name: mysql-svc
   labels:
-    run: mysql
+    app: mysql
 spec:
   ports:
   - port: 3306
     protocol: TCP
   selector:
-    run: mysql
+    app: mysql
 
 ---
 
