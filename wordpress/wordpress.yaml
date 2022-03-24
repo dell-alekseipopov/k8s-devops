@@ -131,4 +131,4 @@ metadata:
   name: wordpress-secrets
 type: Opaque
 data:
-  db-password: cG9wb3ZhNAo=
+  db-password: cG9wb3ZhNA==
