@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: git-cm
+data:
+  source: "https://raw.githubusercontent.com/dell-alekseipopov/k8s-devops/master/c-init/image/image.yaml"
+
+---
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+  labels:
+    app: myapp
+spec:
+  containers:
+  - name: nginx
+    image: nginx-latest
+  initContainers:
+  - name: init-step1 # INIT 1 
+    image: alpine/git:latest
+    command: ['git', 'clone', ]
+    env:
+      - name: GIT_PATH
+        valueFrom:
+          configMapKeyRef:
+            name: git-cm
+            key: source
