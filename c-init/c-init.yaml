@@ -16,7 +16,7 @@ metadata:
 spec:
   containers:
   - name: nginx
-    image: nginx-latest
+    image: nginx:latest
     volumeMounts:
     - mountPath: /usr/share/nginx/html
       name: cdn
