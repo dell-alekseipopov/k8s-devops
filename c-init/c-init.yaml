@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: git-cm
 data:
-  source: "https://raw.githubusercontent.com/dell-alekseipopov/k8s-devops/master/c-init/image/image.yaml"
+  source: "https://github.com/dell-alekseipopov/k8s-devops.git"
 
 ---
 
@@ -17,13 +17,38 @@ spec:
   containers:
   - name: nginx
     image: nginx-latest
+    volumeMounts:
+    - mountPath: /usr/share/nginx/html
+      name: cdn
   initContainers:
   - name: init-step1 # INIT 1 
     image: alpine/git:latest
-    command: ['git', 'clone', ]
+    command: ['git', 'clone', '$(GIT_PATH)', '/cdn']
     env:
       - name: GIT_PATH
         valueFrom:
           configMapKeyRef:
             name: git-cm
             key: source
+    volumeMounts:
+    - mountPath: /cdn
+      name: cdn
+  volumes:
+  - name: cdn
+    emptyDir: {}
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-svc
+spec:
+  ports:
+  - port: 80
+    nodePort: 80
+    targetPort: http-port
+    protocol: TCP
+  selector:
+    app: myapp
+  type: LoadBalancer
